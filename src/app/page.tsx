@@ -1,10 +1,13 @@
 import Header from "@/components/Header/Header";
-import Image from "next/image";
+import SearchBar from "@/components/Search/SearchBar";
+import Trending from "@/components/Media/Trending";
 
 export default function Home() {
   return (
     <main className="">
       <Header />
+      <SearchBar />
+      <Trending />
     </main>
   );
 }

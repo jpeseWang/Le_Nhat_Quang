@@ -4,7 +4,11 @@ import Link from "next/link";
 import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  Bars3Icon,
+  XMarkIcon,
+  MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
 import { Menu, Transition } from "@headlessui/react";
 import { classNames } from "@/utils/classNames";
 import { ImUser } from "react-icons/im";
@@ -12,7 +16,7 @@ import "./Header.scss";
 interface Navigation {
   id: number;
   title: string;
-  hoverBg: string;
+  bgClass: string;
   url: string;
 }
 
@@ -20,35 +24,31 @@ const navigation: Navigation[] = [
   {
     id: 1,
     title: "Reactions",
-    hoverBg: "reactions",
+    bgClass: "reactions",
     url: "/",
   },
   {
     id: 2,
     title: "Entertainment",
-    hoverBg: "entertainment",
-
+    bgClass: "entertainment",
     url: "/",
   },
   {
     id: 3,
     title: "Sports",
-    hoverBg: "sports",
-
+    bgClass: "sports",
     url: "/",
   },
   {
     id: 4,
     title: "Stickers",
-    hoverBg: "stickers",
-
+    bgClass: "stickers",
     url: "/community",
   },
   {
     id: 5,
     title: "Artists",
-    hoverBg: "artists",
-
+    bgClass: "artists",
     url: "/",
   },
 ];
@@ -61,15 +61,14 @@ const Header: React.FC = () => {
   };
   return (
     <div>
-      <header className="mb-6 border-b bg-transparent">
+      <header className="mb-6  bg-transparent">
         <nav
-          className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+          className="mx-auto flex max-w-6xl items-center justify-between p-6 lg:px-8"
           aria-label="Global"
         >
-          <div className="flex items-center lg:flex-1">
-            <Link href="#" className="-m-1.5 flex items-center p-1.5">
+          <div className="flex items-center ">
+            <Link href="#" className="flex items-center p-1.5">
               <div className="logo">
-                <span>Powered by</span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 164 35"
@@ -96,48 +95,44 @@ const Header: React.FC = () => {
           </div>
 
           <div className="flex lg:hidden">
-            <button
-              type="button"
-              className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
-              onClick={() => setMobileMenuOpen(true)}
-            >
-              <span className="sr-only">Open main menu</span>
-              <Bars3Icon
-                className="h-9 w-9 text-[#03CCFF]"
-                aria-hidden="true"
-              />
-            </button>
+            {mobileMenuOpen ? (
+              <button
+                type="button"
+                className="-m-2.5 inline-flex  items-center justify-center rounded-md p-2.5 text-gray-700"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                <span className="sr-only">Close main menu</span>
+                <XMarkIcon
+                  className="h-9 w-9 cursor-pointer text-[#03CCFF]"
+                  aria-hidden="true"
+                />
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
+                onClick={() => setMobileMenuOpen(true)}
+              >
+                <span className="sr-only">Open main menu</span>
+                <Bars3Icon
+                  className="h-9 w-9 text-[#03CCFF]"
+                  aria-hidden="true"
+                />
+              </button>
+            )}
           </div>
-          <div className="hidden lg:flex lg:gap-x-4">
-            {/* {navigation.map((item) => (
-              <div key={item.title} className="menu-button">
-                <div className="text"></div>
-                <Link
-                  href={item.url}
-                  className={`px-3 py-1.5 text-base font-black leading-6 text-white ${item.hoverBg}`}
-                >
-                  {item.title}
-                </Link>
-              </div>
-            ))} */}
+          <div className="hidden lg:flex lg:gap-x-2">
             {navigation.map((item) => (
               <div key={item.title}>
                 <div
-                  className={`button-wrapper ${item.hoverBg} cursor-pointer`}
+                  className={`button-wrapper ${item.bgClass} cursor-pointer`}
                 >
-                  <div className={`menu-button hover-${item.hoverBg}`}>
+                  <div className={`menu-button hover-${item.bgClass}`}>
                     <p className="px-3 py-1.5 text-base font-black leading-6 text-white">
                       {item.title}
                     </p>
                   </div>
                 </div>
-
-                {/* <Link
-                  href={item.url}
-                  className={`px-3 py-1.5 text-base font-black leading-6 text-white `}
-                >
-                  {item.title}
-                </Link> */}
               </div>
             ))}
           </div>
@@ -184,7 +179,7 @@ const Header: React.FC = () => {
                     <Menu.Item>
                       {({ active }) => (
                         <Link
-                          href={`/auth/profile/${session?.data?.id}`}
+                          href={`/profile/${session?.data?.id}`}
                           className={classNames(
                             active ? "bg-gray-100" : "",
                             "block px-4 py-2 text-sm text-gray-700",
@@ -216,7 +211,7 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Link href="/auth/login" className="flex">
+                <Link href="/login" className="flex">
                   <span className="bg-[#5C5C5C] px-2 py-2 text-white">
                     <ImUser className=" bg-transparent" />
                   </span>
@@ -237,52 +232,15 @@ const Header: React.FC = () => {
           onClose={setMobileMenuOpen}
         >
           <div className="fixed inset-0 z-10" />
-          <Dialog.Panel className="fixed inset-y-0 right-0 z-10 w-full overflow-y-auto bg-white px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
-            <div className="flex items-center justify-between">
-              <a href="#" className="-m-1.5 p-1.5">
-                <span className="sr-only">Your Company</span>
-                <div className="logo">
-                  <span>Powered by</span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    viewBox="0 0 164 35"
-                    className="Svg-sc-jx1qpn cietHP"
-                  >
-                    <g fillRule="evenodd" clipRule="evenodd">
-                      <path fill="#00ff99" d="M0 3h4v29H0z"></path>
-                      <path fill="#9933ff" d="M24 11h4v21h-4z"></path>
-                      <path fill="#00ccff" d="M0 31h28v4H0z"></path>
-                      <path fill="#fff35c" d="M0 0h16v4H0z"></path>
-                      <path fill="#ff6666" d="M24 8V4h-4V0h-4v12h12V8"></path>
-                      <path
-                        fill="#121212"
-                        opacity="0.4"
-                        d="M24 16v-4h4M16 0v4h-4"
-                      ></path>
-                    </g>
-                    <g fill="#ffffff">
-                      <path d="M59.1 12c-2-1.9-4.4-2.4-6.2-2.4-4.4 0-7.3 2.6-7.3 8 0 3.5 1.8 7.8 7.3 7.8 1.4 0 3.7-.3 5.2-1.4v-3.5h-6.9v-6h13.3v12.1c-1.7 3.5-6.4 5.3-11.7 5.3-10.7 0-14.8-7.2-14.8-14.3 0-7.1 4.7-14.4 14.9-14.4 3.8 0 7.1.8 10.7 4.4L59.1 12zM68.2 31.2V4h7.6v27.2h-7.6zM88.3 23.8v7.3h-7.7V4h13.2c7.3 0 10.9 4.6 10.9 9.9 0 5.6-3.6 9.9-10.9 9.9h-5.5zm0-6.5h5.5c2.1 0 3.2-1.6 3.2-3.3 0-1.8-1.1-3.4-3.2-3.4h-5.5v6.7zM125 31.2V20.9h-9.8v10.3h-7.7V4h7.7v10.3h9.8V4h7.6v27.2H125zM149.2 13.3l5.9-9.3h8.7v.3l-10.8 16v10.8h-7.7V20.3L135 4.3V4h8.7l5.5 9.3z"></path>
-                    </g>
-                  </svg>
-                </div>
-              </a>
-              <button
-                type="button"
-                className="-m-2.5 rounded-md p-2.5 text-gray-700"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <span className="sr-only">Close menu</span>
-                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
-              </button>
-            </div>
-            <div className="mt-6 flow-root">
+          <Dialog.Panel className="fixed inset-y-0 right-0 z-10 mt-20 w-full overflow-y-auto bg-gradient-to-b from-purple-500 to-pink-500 px-6 py-6  sm:ring-1 sm:ring-gray-900/10">
+            <div className=" flow-root">
               <div className="-my-6 divide-y divide-gray-500/10">
                 <div className="space-y-2 py-6">
                   {navigation.map((item) => (
                     <Link
                       key={item.title}
                       href={item.url}
-                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-gray-900 hover:bg-gray-50"
+                      className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7 text-white"
                     >
                       {item.title}
                     </Link>
@@ -292,7 +250,7 @@ const Header: React.FC = () => {
                   {status === "authenticated" ? (
                     <>
                       <div className="flex">
-                        <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        <Menu.Button className="flex rounded-full bg-pink-400 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="sr-only">Open user menu</span>
                           {session?.data?.avatar ? (
                             <img
@@ -325,7 +283,7 @@ const Header: React.FC = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={`/auth/profile/${session?.data?.id}`}
+                                href={`/profile/${session?.data?.id}`}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700",
@@ -351,7 +309,7 @@ const Header: React.FC = () => {
                           <Menu.Item>
                             {({ active }) => (
                               <Link
-                                href={`/auth/setting/${session?.data?.id}`}
+                                href={`/setting/${session?.data?.id}`}
                                 className={classNames(
                                   active ? "bg-gray-100" : "",
                                   "block px-4 py-2 text-sm text-gray-700",
@@ -382,9 +340,8 @@ const Header: React.FC = () => {
                     </>
                   ) : (
                     <>
-                      {" "}
                       <Link
-                        href="/auth/login"
+                        href="/login"
                         className="text-sm font-semibold leading-6 text-white"
                       >
                         Log in

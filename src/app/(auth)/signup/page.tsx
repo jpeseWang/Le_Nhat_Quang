@@ -111,7 +111,6 @@ export default function SignUpPage() {
           </div>
         </div>
       </div>
-      <Footer />
     </>
   );
 }

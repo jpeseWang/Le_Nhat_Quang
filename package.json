@@ -17,6 +17,7 @@
     "@headlessui/react": "^1.7.17",
     "@heroicons/react": "^2.0.18",
     "@react-spring/parallax": "^9.7.3",
+    "axios": "^1.6.2",
     "bcryptjs": "^2.4.3",
     "client-only": "^0.0.1",
     "framer-motion": "^10.16.4",
