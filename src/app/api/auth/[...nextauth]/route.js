@@ -1,6 +1,4 @@
 import NextAuth from "next-auth";
-import GithubProvider from "next-auth/providers/github";
-import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
 import User from "@/models/User";
 import connect from "@/utils/db";
@@ -38,27 +36,16 @@ const handler = NextAuth({
         }
       },
     }),
-    GithubProvider({
-      clientId: process.env.GITHUB_ID,
-      clientSecret: process.env.GITHUB_SECRET,
-    }),
-    GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    }),
   ],
   pages: {
-    error: "/auth/login",
+    error: "/login",
   },
   callbacks: {
     jwt: ({ token, user, trigger }) => {
       if (user) {
         token.id = user.id;
         token.username = user.username;
-        token.fullname = user.fullname;
         token.email = user.email;
-        token.career = user.career;
-        token.avatar = user.avatar;
       }
       return token;
     },
@@ -66,10 +53,7 @@ const handler = NextAuth({
       if (token) {
         session.id = token.id;
         session.username = token.username;
-        session.fullname = token.fullname;
         session.email = token.email;
-        session.career = token.career;
-        session.avatar = token.avatar;
       }
       return Promise.resolve(session);
     },

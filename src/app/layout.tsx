@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import AuthProvider from "@/components/AuthProvider/AuthProvider";
+import GoogleAnalytics from "@/components/GoogleAnalytics/GoogleAnalytics";
+import Header from "@/components/Header/Header";
 import "./globals.scss";
-import { Session } from "next-auth";
-import { SessionProvider } from "next-auth/react";
-import type { AppProps } from "next/app";
+import CookieBanner from "@/components/GoogleAnalytics/CookieBanner";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,9 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" className="mx-auto max-w-[1040px]">
       <AuthProvider>
-        <body className={inter.className}>{children}</body>
+        <GoogleAnalytics GA_MEASUREMENT_ID="G-0000000000" />
+        <Toaster position="top-center" reverseOrder={false} />
+        <body className={inter.className}>
+          <Header />
+          {children}
+          <CookieBanner />
+        </body>
       </AuthProvider>
     </html>
   );

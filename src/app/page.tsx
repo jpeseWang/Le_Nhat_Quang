@@ -5,7 +5,6 @@ import Trending from "@/components/Media/Trending";
 export default function Home() {
   return (
     <main className="">
-      <Header />
       <SearchBar />
       <Trending />
     </main>

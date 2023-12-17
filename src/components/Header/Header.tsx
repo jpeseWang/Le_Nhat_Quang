@@ -1,17 +1,13 @@
 "use client";
-import { Fragment, useState } from "react";
+import React, { Fragment, useState } from "react";
 import Link from "next/link";
-import React from "react";
 import { signOut, useSession } from "next-auth/react";
 import { Dialog } from "@headlessui/react";
-import {
-  Bars3Icon,
-  XMarkIcon,
-  MagnifyingGlassIcon,
-} from "@heroicons/react/24/outline";
+import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition } from "@headlessui/react";
 import { classNames } from "@/utils/classNames";
 import { ImUser } from "react-icons/im";
+
 import "./Header.scss";
 interface Navigation {
   id: number;
@@ -61,13 +57,13 @@ const Header: React.FC = () => {
   };
   return (
     <div>
-      <header className="mb-6  bg-transparent">
+      <header className="mb-6 bg-transparent">
         <nav
-          className="mx-auto flex max-w-6xl items-center justify-between p-6 lg:px-8"
+          className=" m flex items-center justify-between p-6 lg:px-8"
           aria-label="Global"
         >
           <div className="flex items-center ">
-            <Link href="#" className="flex items-center p-1.5">
+            <Link href="/" className="flex items-center p-1.5">
               <div className="logo">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -98,7 +94,7 @@ const Header: React.FC = () => {
             {mobileMenuOpen ? (
               <button
                 type="button"
-                className="-m-2.5 inline-flex  items-center justify-center rounded-md p-2.5 text-gray-700"
+                className="-m-2.5 inline-flex items-center justify-center rounded-md p-2.5 text-gray-700"
                 onClick={() => setMobileMenuOpen(false)}
               >
                 <span className="sr-only">Close main menu</span>
@@ -121,14 +117,14 @@ const Header: React.FC = () => {
               </button>
             )}
           </div>
-          <div className="hidden lg:flex lg:gap-x-2">
+          <div className="hidden lg:flex">
             {navigation.map((item) => (
               <div key={item.title}>
                 <div
                   className={`button-wrapper ${item.bgClass} cursor-pointer`}
                 >
                   <div className={`menu-button hover-${item.bgClass}`}>
-                    <p className="px-3 py-1.5 text-base font-black leading-6 text-white">
+                    <p className="px-3 py-1.5 text-sm font-black leading-6 text-white">
                       {item.title}
                     </p>
                   </div>
@@ -138,10 +134,10 @@ const Header: React.FC = () => {
           </div>
           <Menu as="div" className="hidden lg:flex lg:flex-1 lg:justify-end">
             <div className="mr-2 gap-x-1 px-1 text-center  text-[14px] leading-6 text-white">
-              <Menu.Button className="mr-1 rounded bg-[#6058FF] px-4 py-1.5 ">
+              <Menu.Button className="mr-1 rounded-sm bg-[#6058FF] px-3 py-1.5 hover:opacity-50">
                 Upload
               </Menu.Button>
-              <Menu.Button className="rounded bg-[#9933FF] px-4 py-1.5">
+              <Menu.Button className="rounded-sm bg-[#9933FF] px-3 py-1.5 hover:opacity-70">
                 Create
               </Menu.Button>
             </div>
@@ -211,11 +207,14 @@ const Header: React.FC = () => {
               </>
             ) : (
               <>
-                <Link href="/login" className="flex">
+                <Link
+                  href="/login"
+                  className="inline-flex max-h-[36px] hover:opacity-60"
+                >
                   <span className="bg-[#5C5C5C] px-2 py-2 text-white">
                     <ImUser className=" bg-transparent" />
                   </span>
-                  <button className="bg-[#3E3E3E] px-8 py-1.5 text-xs font-bold leading-6 text-white">
+                  <button className="bg-[#3E3E3E] px-8 py-1.5 text-xs font-bold leading-6 text-white sm:px-6">
                     Log In
                   </button>
                 </Link>

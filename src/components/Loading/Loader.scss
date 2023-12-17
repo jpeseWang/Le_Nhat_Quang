@@ -9,6 +9,7 @@
   top: 33px;
   width: 13px;
   height: 13px;
+
   animation-timing-function: cubic-bezier(0, 1, 1, 0);
 }
 .lds-ellipsis div:nth-child(1) {
@@ -24,15 +25,10 @@
 .lds-ellipsis div:nth-child(3) {
   left: 32px;
   animation: lds-ellipsis2 0.6s infinite;
-  background: #9834ff;
+  background: #ff6565;
 }
 .lds-ellipsis div:nth-child(4) {
   left: 56px;
-  animation: lds-ellipsis3 0.6s infinite;
-  background: #ff6565;
-}
-.lds-ellipsis div:nth-child(5) {
-  left: 76px;
   animation: lds-ellipsis3 0.6s infinite;
   background: #fef35b;
 }
@@ -60,3 +56,10 @@
     transform: translate(24px, 0);
   }
 }
+
+//     background: #07fe98;
+//     background: #00cbfd;
+//     background: #9834ff;
+//     background: #ff6565;
+//     background: #fef35b;
+//   }

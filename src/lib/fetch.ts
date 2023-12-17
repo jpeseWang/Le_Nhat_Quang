@@ -1,7 +1,7 @@
-export default async function fetcher<JSON = any>(
-  input: RequestInfo,
-  init?: RequestInit,
-): Promise<JSON> {
-  const res = await fetch(input, init);
-  return res.json();
-}
+export const fetcher = async <T>(
+  ...args: Parameters<typeof fetch>
+): Promise<T> => {
+  const response = await fetch(...args);
+  const data = await response.json();
+  return data;
+};
