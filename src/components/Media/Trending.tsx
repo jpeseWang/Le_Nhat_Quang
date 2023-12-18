@@ -19,7 +19,7 @@ export default function Trending(): JSX.Element {
     fetcher,
   );
   const gifData = data?.data;
-  // data && console.log(data.data);
+
   return (
     <>
       <>

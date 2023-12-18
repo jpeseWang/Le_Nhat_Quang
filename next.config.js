@@ -18,9 +18,6 @@ const nextConfig = {
       pathname: "/media/**",
     })),
   },
-  experimental: {
-    serverActions: true,
-  },
 };
 
 module.exports = nextConfig;

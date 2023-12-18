@@ -5,7 +5,7 @@ import { signOut, useSession } from "next-auth/react";
 import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Menu, Transition } from "@headlessui/react";
-import { classNames } from "@/utils/classNames";
+import { classNames } from "@/utils/app_utils";
 import { ImUser } from "react-icons/im";
 
 import "./Header.scss";
@@ -55,6 +55,7 @@ const Header: React.FC = () => {
   const handleSignOut = () => {
     signOut();
   };
+
   return (
     <div>
       <header className="mb-6 bg-transparent">
@@ -147,19 +148,11 @@ const Header: React.FC = () => {
                 <div>
                   <Menu.Button className="flex rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                     <span className="sr-only">Open user menu</span>
-                    {session.data?.avatar ? (
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src={session.data.avatar}
-                        alt=""
-                      />
-                    ) : (
-                      <img
-                        className="h-8 w-8 rounded-full"
-                        src="https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max"
-                        alt=""
-                      />
-                    )}
+                    <img
+                      className="h-8 w-8 rounded-full"
+                      src="https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max"
+                      alt=""
+                    />
                   </Menu.Button>
                 </div>
                 <Transition
@@ -175,13 +168,13 @@ const Header: React.FC = () => {
                     <Menu.Item>
                       {({ active }) => (
                         <Link
-                          href={`/profile/${session?.data?.id}`}
+                          href={`/profile`}
                           className={classNames(
                             active ? "bg-gray-100" : "",
                             "block px-4 py-2 text-sm text-gray-700",
                           )}
                         >
-                          Your Profile
+                          Hi {session?.user.username}
                         </Link>
                       )}
                     </Menu.Item>
@@ -251,22 +244,15 @@ const Header: React.FC = () => {
                       <div className="flex">
                         <Menu.Button className="flex rounded-full bg-pink-400 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                           <span className="sr-only">Open user menu</span>
-                          {session?.data?.avatar ? (
-                            <img
-                              className="h-8 w-8 rounded-full "
-                              src={session.data.avatar}
-                              alt=""
-                            />
-                          ) : (
-                            <img
-                              className="h-8 w-8 rounded-full"
-                              src="https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max"
-                              alt=""
-                            />
-                          )}
+
+                          <img
+                            className="h-8 w-8 rounded-full"
+                            src="https://images.nightcafe.studio//assets/profile.png?tr=w-1600,c-at_max"
+                            alt=""
+                          />
                         </Menu.Button>
-                        <span className="px-2 pt-1 font-medium text-gray-600">
-                          Welcome {session?.data?.fullname}!{" "}
+                        <span className="px-2 pt-1 font-medium text-gray-200">
+                          Welcome {session?.data?.username}!
                         </span>
                       </div>
                       <Transition
@@ -288,36 +274,11 @@ const Header: React.FC = () => {
                                   "block px-4 py-2 text-sm text-gray-700",
                                 )}
                               >
-                                Your Profile
+                                Welcome {session?.user.username}!
                               </Link>
                             )}
                           </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <Link
-                                href={`/community/message`}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700",
-                                )}
-                              >
-                                Message
-                              </Link>
-                            )}
-                          </Menu.Item>
-                          <Menu.Item>
-                            {({ active }) => (
-                              <Link
-                                href={`/setting/${session?.data?.id}`}
-                                className={classNames(
-                                  active ? "bg-gray-100" : "",
-                                  "block px-4 py-2 text-sm text-gray-700",
-                                )}
-                              >
-                                Settings
-                              </Link>
-                            )}
-                          </Menu.Item>
+
                           <Menu.Item>
                             {({ active }) => (
                               <Link

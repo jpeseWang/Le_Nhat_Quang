@@ -22,7 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="mx-auto max-w-[1040px]">
       <AuthProvider>
-        <GoogleAnalytics GA_MEASUREMENT_ID="G-0000000000" />
+        <GoogleAnalytics GA_MEASUREMENT_ID="G-WN680W2WNK" />
         <Toaster position="top-center" reverseOrder={false} />
         <body className={inter.className}>
           <Header />

@@ -1,11 +1,12 @@
 "use client";
 import React, { useState } from "react";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
-import SearchRecommend from "./SearchRecommend";
 import { useRouter } from "next/navigation";
+
 export default function SearchBar() {
   const [searchParam, setSearchParam] = useState("");
   const router = useRouter();
+
   return (
     <div className=" mx-auto flex max-w-6xl items-center lg:px-8">
       <input
@@ -24,7 +25,6 @@ export default function SearchBar() {
       >
         <MagnifyingGlassIcon className="h-9 w-9" />
       </div>
-      {/* <SearchRecommend /> */}
     </div>
   );
 }

@@ -1,8 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { LinkIcon } from "@heroicons/react/24/outline";
-import { HeartIcon } from "@heroicons/react/20/solid";
+import { convertStr2Slug } from "@/utils/app_utils";
 interface GifProps {
   title: string;
   imgSrc: string;
@@ -10,7 +9,7 @@ interface GifProps {
 }
 export const GifCard: React.FC<GifProps> = ({ title, imgSrc, id }) => {
   return (
-    <Link href={`/gifs/${id}`}>
+    <Link href={`/gifs/${convertStr2Slug(title)}-${id}`}>
       <div className="group relative my-2 h-auto max-w-full">
         <Image
           src={imgSrc}

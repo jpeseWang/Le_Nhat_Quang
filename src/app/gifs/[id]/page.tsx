@@ -1,11 +1,9 @@
 "use client";
 import useSWR from "swr";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
-
 import Loader from "@/components/Loading/Loader";
 import Image from "next/image";
-
+import SearchBar from "@/components/Search/SearchBar";
 import {
   FaFacebookSquare,
   FaTwitter,
@@ -15,27 +13,23 @@ import {
 } from "react-icons/fa";
 import { RiInstagramFill } from "react-icons/ri";
 import { ImEmbed } from "react-icons/im";
-import SearchBar from "@/components/Search/SearchBar";
 import { fetcher } from "@/lib/fetch";
-
+import { convertSlug2Id } from "@/utils/app_utils";
 interface SearchResultPageProps {
   params: any;
 }
+
 export default function SearchResultPage({ params }: SearchResultPageProps) {
   const gifsConfig = {
     baseUrl: process.env.baseURL,
     apiKey: process.env.REACT_APP_GIPHY_API_KEY,
   };
-  const router = useRouter();
+  const id = convertSlug2Id(params.id);
   const { data, mutate, error, isLoading }: any = useSWR(
-    `${gifsConfig.baseUrl}/${params.id}?api_key=${gifsConfig.apiKey}`,
+    `${gifsConfig.baseUrl}/${id}?api_key=${gifsConfig.apiKey}`,
     fetcher,
   );
-
-  // const [gifsData, setGifData] = useState(data?.data || null);
-
   const gifsData = data?.data;
-  console.log("gif >> ", gifsData);
 
   return (
     <main className="">
@@ -110,12 +104,10 @@ export default function SearchResultPage({ params }: SearchResultPageProps) {
                     <FaHeart className="mr-4 inline h-6 w-6 cursor-pointer hover:scale-125" />{" "}
                     Favorite
                   </div>
-
                   <div className="mb-4 font-semibold">
                     <FaPaperPlane className="mr-4 inline h-6 w-6 cursor-pointer hover:scale-125" />{" "}
                     Share
                   </div>
-
                   <div className="mb-4 font-semibold">
                     <ImEmbed className="mr-4 inline h-6 w-6 cursor-pointer hover:scale-125" />{" "}
                     Embed

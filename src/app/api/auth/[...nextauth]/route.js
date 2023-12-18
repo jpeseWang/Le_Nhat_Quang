@@ -51,9 +51,7 @@ const handler = NextAuth({
     },
     session: async ({ session, token }) => {
       if (token) {
-        session.id = token.id;
-        session.username = token.username;
-        session.email = token.email;
+        session.user = token; // Save the entire user object in the session
       }
       return Promise.resolve(session);
     },
